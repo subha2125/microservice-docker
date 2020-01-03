@@ -42,20 +42,24 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
 		<plugins>
-		<!--
-		    <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <configuration>
-                    <to>
-                        <image>${project.build.finalName}</image>
-                    </to>
-                </configuration>
-            </plugin> -->
+			<!-- <plugin> <groupId>com.google.cloud.tools</groupId> <artifactId>jib-maven-plugin</artifactId> 
+				<configuration> <to> <image>${project.build.finalName}</image> </to> </configuration> 
+				</plugin> -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -74,12 +78,12 @@
 					</execution>
 				</executions>
 				<configuration>
-				    <imageName>${project.build.finalName}.jar</imageName>
-                    <imageTags>
-                        <imageTag>${project.version}</imageTag>
-                        <imageTag>latest</imageTag>
-                    </imageTags>
-                    <baseImage>java:8</baseImage>
+					<imageName>${project.build.finalName}.jar</imageName>
+					<imageTags>
+						<imageTag>${project.version}</imageTag>
+						<imageTag>latest</imageTag>
+					</imageTags>
+					<baseImage>java:8</baseImage>
 					<repository>${project.artifactId}</repository>
 					<tag>${project.version}</tag>
 					<buildArgs>
