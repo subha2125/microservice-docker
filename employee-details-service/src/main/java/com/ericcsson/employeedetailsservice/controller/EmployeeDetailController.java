@@ -3,6 +3,8 @@ package com.ericcsson.employeedetailsservice.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.assertj.core.util.Arrays;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +18,8 @@ import com.ericcsson.employeedetailsservice.model.EmployeeInfo;
 import com.ericcsson.employeedetailsservice.model.EmployeeSalary;
 import com.ericcsson.employeedetailsservice.model.EmployeeSalaryList;
 
-import org.slf4j.Logger;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/employee")
@@ -29,6 +32,7 @@ public class EmployeeDetailController {
 
 	
 	@GetMapping("/getAllEmployeeDetails")
+	@ApiOperation(value="Get All Emp Details",response=EmployeeDetails.class)
 	public List<EmployeeDetails> getAllDetails() {
 		List<EmployeeDetails> empDetailsList = new ArrayList<EmployeeDetails>();
 		logger.info("Calling to employee-salary-service start");
@@ -44,28 +48,12 @@ public class EmployeeDetailController {
 		}
 		
 		return empDetailsList;
-		 
-		/*
-		 * return new EmployeeDetails(empinfo.getId(), empinfo.getName(),
-		 * empinfo.getJobStage(), empinfo.getJobRole(), empinfo.getSkills(),
-		 * empinfo.getHobbies(), empsal.getSalary());
-		 * 
-		 * return ratings.stream().map(rating -> { Movie movie =
-		 * restTemplate.getForObject("http://movie-info-service/movies/" +
-		 * rating.getMovieId(), Movie.class); return new
-		 * EmployeeDetails(movie.getName(), "Romantic", rating.getRating());
-		 * }).collect(Collectors.toList());
-		 */
-		
-	
 
 	}
 	 
 
-	@RequestMapping("/employee/{id}")
+	@RequestMapping("/{id}")
 	public EmployeeDetails employeeDetails(@PathVariable int id) {
-		// return employeeDetailsAll.stream().filter(t -> t.getId() ==
-		// id).findFirst().get();
 		EmployeeInfo empinfo = restTemplate.getForObject("http://employee-info-service/info/" + id, EmployeeInfo.class);
 		EmployeeSalary empsal = restTemplate.getForObject("http://employee-salary-service/salary/" + id,
 				EmployeeSalary.class);
@@ -78,5 +66,12 @@ public class EmployeeDetailController {
 	@RequestMapping("/hello")
 	public String greeting() {
 		return "Hello User";
+	}
+	
+	@RequestMapping("/empInfo")
+	public List<EmployeeInfo> getEmployeeInfo() {
+		List<EmployeeInfo> employeeInfos = new ArrayList<EmployeeInfo>();
+		employeeInfos.add(new EmployeeInfo(1, "Donald", "4", "SA", "Docker", "Cricket"));
+		return employeeInfos;
 	}
 }

@@ -1,5 +1,8 @@
 package com.ericcsson.employeedetailsservice.model;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel(value="Details about Employee")
 public class EmployeeDetails {
 
 	private int id;
