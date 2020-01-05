@@ -11,6 +11,20 @@ services:
     #hostname: "localhost"
     #ports:
     # - "8888:8888"
+  mysql:
+    image: mysql
+    container_name: mysqlDB
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=employeeDB
+      - MYSQL_USER=emp
+      - MYSQL_PASSWORD=emp
+    hostname: "localhost"
+    ports:
+      - "4406:4406"
+    restart: always  
+    volumes:
+      - /data:/docker-entrypoint-initdb.d
 
   employee-salary-service:
     image: "employee-salary-service:2.0.0-SNAPSHOT"
@@ -28,6 +42,7 @@ services:
     hostname: "localhost"
     links:
       - eureka
+      - mysql
       #- config-server
     environment:
        EUREKA_HOST: eureka
