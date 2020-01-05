@@ -3,6 +3,8 @@ package com.hystrix.hystrix.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +21,14 @@ public class EmployeeDetailsService {
 	
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	Logger logger = LoggerFactory.getLogger(EmployeeDetailsService.class);
 
 	@GetMapping("/getAllEmployeeDetails")
 	@HystrixCommand(fallbackMethod="getAllDetailsFallBack")
 	public List<EmployeeDetails> getAllDetails() {
 
-		//EmployeeInfo empinfo = restTemplate.getForObject("http://employee-info-service/info/", EmployeeInfo.class);
+		logger.info("Inside getAllDetails");
 		List<EmployeeDetails> empDetailsList = new ArrayList<EmployeeDetails>();
 		EmployeeSalaryList empsalAll = restTemplate.getForObject("http://employee-salary-service/salary/",
 				EmployeeSalaryList.class);
@@ -40,7 +44,7 @@ public class EmployeeDetailsService {
 	}
 	
 	public List<EmployeeDetails> getAllDetailsFallBack() {
-
+		logger.info("Inside getAllDetailsFallBack");
 		List<EmployeeDetails> empDetailsList = new ArrayList<EmployeeDetails>();
 		EmployeeSalaryList empsalAll = restTemplate.getForObject("http://localhost:8183/salary/",
 				EmployeeSalaryList.class);

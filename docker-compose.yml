@@ -5,6 +5,12 @@ services:
     hostname: "localhost"
     ports:
      - "8761:8761"
+     
+  #config-server:
+    #image: "config-server:2.0.0-SNAPSHOT"
+    #hostname: "localhost"
+    #ports:
+    # - "8888:8888"
 
   employee-salary-service:
     image: "employee-salary-service:2.0.0-SNAPSHOT"
@@ -22,6 +28,7 @@ services:
     hostname: "localhost"
     links:
       - eureka
+      #- config-server
     environment:
        EUREKA_HOST: eureka
        EUREKA_PORT: 8761

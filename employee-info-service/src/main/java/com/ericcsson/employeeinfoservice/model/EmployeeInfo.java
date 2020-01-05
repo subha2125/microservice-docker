@@ -1,14 +1,30 @@
 package com.ericcsson.employeeinfoservice.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class EmployeeInfo {
-	
-	private int id;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 	private String name;
 	private String jobStage;
 	private String jobRole;
 	private String skills;
 	private String hobbies;
-	public EmployeeInfo(int id, String name, String jobStage, String jobRole, String skills, String hobbies) {
+
+	public EmployeeInfo(long id, String name, String jobStage, String jobRole, String skills, String hobbies) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -17,43 +33,5 @@ public class EmployeeInfo {
 		this.skills = skills;
 		this.hobbies = hobbies;
 	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getJobStage() {
-		return jobStage;
-	}
-	public void setJobStage(String jobStage) {
-		this.jobStage = jobStage;
-	}
-	public String getJobRole() {
-		return jobRole;
-	}
-	public void setJobRole(String jobRole) {
-		this.jobRole = jobRole;
-	}
-	public String getSkills() {
-		return skills;
-	}
-	public void setSkills(String skills) {
-		this.skills = skills;
-	}
-	public String getHobbies() {
-		return hobbies;
-	}
-	public void setHobbies(String hobbies) {
-		this.hobbies = hobbies;
-	}
-	
-	
-	
+
 }

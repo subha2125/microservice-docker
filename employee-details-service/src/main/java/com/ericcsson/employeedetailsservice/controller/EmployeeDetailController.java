@@ -3,7 +3,6 @@ package com.ericcsson.employeedetailsservice.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.assertj.core.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import com.ericcsson.employeedetailsservice.model.EmployeeSalary;
 import com.ericcsson.employeedetailsservice.model.EmployeeSalaryList;
 
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/employee")
