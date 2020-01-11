@@ -2,13 +2,15 @@ version: '3'
 services:
   eureka:
     image: "discoveryserver:2.0.0-SNAPSHOT"
-    hostname: "localhost"
+    hostname: "IN-00207677"
+    networks:
+     - microservice-docker
     ports:
      - "8761:8761"
      
   #config-server:
     #image: "config-server:2.0.0-SNAPSHOT"
-    #hostname: "localhost"
+    #hostname: "IN-00207677"
     #ports:
     # - "8888:8888"
   mysql:
@@ -19,16 +21,20 @@ services:
       - MYSQL_DATABASE=employeeDB
       - MYSQL_USER=emp
       - MYSQL_PASSWORD=emp
-    hostname: "localhost"
+    hostname: "IN-00207677"
+    networks:
+     - microservice-docker
     ports:
       - "4406:4406"
     restart: always  
     volumes:
-      - /data:/docker-entrypoint-initdb.d
+      - /amx-data:/var/lib/mysql
 
   employee-salary-service:
     image: "employee-salary-service:2.0.0-SNAPSHOT"
-    hostname: "localhost"
+    hostname: "IN-00207677"
+    networks:
+     - microservice-docker
     links:
       - eureka
     environment:
@@ -39,11 +45,15 @@ services:
 
   employee-info-service:
     image: "employee-info-service:2.0.0-SNAPSHOT"
-    hostname: "localhost"
+    hostname: "IN-00207677"
+    networks:
+     - microservice-docker
     links:
       - eureka
       - mysql
       #- config-server
+    depends_on:
+      - mysql
     environment:
        EUREKA_HOST: eureka
        EUREKA_PORT: 8761
@@ -52,7 +62,9 @@ services:
       
   employee-details-service:
     image: "employee-details-service:2.0.0-SNAPSHOT"
-    hostname: "localhost"
+    hostname: "IN-00207677"
+    networks:
+     - microservice-docker
     links:
       - eureka
       - employee-salary-service
@@ -61,11 +73,13 @@ services:
        EUREKA_HOST: eureka
        EUREKA_PORT: 8761
     ports:
-      - "8182:8181"
+      - "8181:8181"
       
   hystrix-service:
     image: "hystrix:2.0.0-SNAPSHOT"
-    hostname: "localhost"
+    hostname: "IN-00207677"
+    networks:
+     - microservice-docker
     links:
       - eureka
     environment:
@@ -73,3 +87,7 @@ services:
        EUREKA_PORT: 8761
     ports:
       - "8091:8090"
+networks:
+  microservice-docker:
+volumes:
+  amx-data:
