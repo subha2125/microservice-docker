@@ -29,7 +29,7 @@ services:
       - "4406:4406"
     restart: always  
     volumes:
-      - /amx-data:/var/lib/mysql
+      - amx-data:/var/lib/mysql
 
   employee-salary-service:
     #image: "employee-salary-service:2.0.0-SNAPSHOT"
