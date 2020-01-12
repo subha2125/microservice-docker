@@ -1,7 +1,8 @@
 version: '3'
 services:
   eureka:
-    image: "discoveryserver:2.0.0-SNAPSHOT"
+    #image: "discoveryserver:2.0.0-SNAPSHOT"
+    build: ./discoveryServer
     hostname: "IN-00207677"
     networks:
      - microservice-docker
@@ -31,11 +32,14 @@ services:
       - /amx-data:/var/lib/mysql
 
   employee-salary-service:
-    image: "employee-salary-service:2.0.0-SNAPSHOT"
+    #image: "employee-salary-service:2.0.0-SNAPSHOT"
+    build: ./employee-salary-service
     hostname: "IN-00207677"
     networks:
      - microservice-docker
     links:
+      - eureka
+    depends_on:
       - eureka
     environment:
        EUREKA_HOST: eureka
@@ -44,7 +48,8 @@ services:
       - "8183:8183"
 
   employee-info-service:
-    image: "employee-info-service:2.0.0-SNAPSHOT"
+    #image: "employee-info-service:2.0.0-SNAPSHOT"
+    build: ./employee-info-service
     hostname: "IN-00207677"
     networks:
      - microservice-docker
@@ -54,6 +59,7 @@ services:
       #- config-server
     depends_on:
       - mysql
+      - eureka
     environment:
        EUREKA_HOST: eureka
        EUREKA_PORT: 8761
@@ -61,7 +67,8 @@ services:
       - "8184:8184"
       
   employee-details-service:
-    image: "employee-details-service:2.0.0-SNAPSHOT"
+    #image: "employee-details-service:2.0.0-SNAPSHOT"
+    build: ./employee-details-service
     hostname: "IN-00207677"
     networks:
      - microservice-docker
@@ -69,6 +76,8 @@ services:
       - eureka
       - employee-salary-service
       - employee-info-service
+    depends_on:
+      - eureka
     environment:
        EUREKA_HOST: eureka
        EUREKA_PORT: 8761
@@ -76,11 +85,14 @@ services:
       - "8181:8181"
       
   hystrix-service:
-    image: "hystrix:2.0.0-SNAPSHOT"
+    #image: "hystrix:2.0.0-SNAPSHOT"
+    build: ./hystrix
     hostname: "IN-00207677"
     networks:
      - microservice-docker
     links:
+      - eureka
+    depends_on:
       - eureka
     environment:
        EUREKA_HOST: eureka
