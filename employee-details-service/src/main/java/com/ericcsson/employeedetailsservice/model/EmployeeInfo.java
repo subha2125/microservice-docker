@@ -58,6 +58,10 @@ public class EmployeeInfo {
 		this.hobbies = hobbies;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "EmployeeInfo [name=" + name + ", jobStage=" + jobStage + ", jobRole=" + jobRole + ", skills=" + skills
+				+ ", hobbies=" + hobbies + "]";
+	}
 	
 }

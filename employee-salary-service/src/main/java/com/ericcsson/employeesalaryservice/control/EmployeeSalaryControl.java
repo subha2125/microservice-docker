@@ -21,9 +21,9 @@ public class EmployeeSalaryControl {
 	private RestTemplate restTemplate;
 	
 	List<EmployeeSalary> employeeInfoAll = new ArrayList<>(Arrays.asList(
-			new EmployeeSalary(123, "100000"),
-			new EmployeeSalary(124, "300000"),
-			new EmployeeSalary(125, "200000")
+			new EmployeeSalary(1, "100000"),
+			new EmployeeSalary(2, "300000"),
+			new EmployeeSalary(3, "200000")
 			)); 
 	
 	@RequestMapping("/salary")

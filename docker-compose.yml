@@ -3,7 +3,7 @@ services:
   eureka:
     #image: "discoveryserver:2.0.0-SNAPSHOT"
     build: ./discoveryServer
-    hostname: "IN-00207677"
+    hostname: "localhost"
     networks:
      - microservice-docker
     ports:
@@ -11,7 +11,7 @@ services:
      
   #config-server:
     #image: "config-server:2.0.0-SNAPSHOT"
-    #hostname: "IN-00207677"
+    #hostname: "localhost"
     #ports:
     # - "8888:8888"
   mysql:
@@ -22,7 +22,7 @@ services:
       - MYSQL_DATABASE=employeeDB
       - MYSQL_USER=emp
       - MYSQL_PASSWORD=emp
-    hostname: "IN-00207677"
+    hostname: "localhost"
     networks:
      - microservice-docker
     ports:
@@ -34,7 +34,7 @@ services:
   employee-salary-service:
     #image: "employee-salary-service:2.0.0-SNAPSHOT"
     build: ./employee-salary-service
-    hostname: "IN-00207677"
+    hostname: "employee-salary-service"
     networks:
      - microservice-docker
     links:
@@ -50,7 +50,7 @@ services:
   employee-info-service:
     #image: "employee-info-service:2.0.0-SNAPSHOT"
     build: ./employee-info-service
-    hostname: "IN-00207677"
+    hostname: "employee-info-service"
     networks:
      - microservice-docker
     links:
@@ -69,7 +69,7 @@ services:
   employee-details-service:
     #image: "employee-details-service:2.0.0-SNAPSHOT"
     build: ./employee-details-service
-    hostname: "IN-00207677"
+    hostname: "employee-details-service"
     networks:
      - microservice-docker
     links:
@@ -87,7 +87,7 @@ services:
   hystrix-service:
     #image: "hystrix:2.0.0-SNAPSHOT"
     build: ./hystrix
-    hostname: "IN-00207677"
+    hostname: "localhost"
     networks:
      - microservice-docker
     links:

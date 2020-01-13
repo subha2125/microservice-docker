@@ -40,9 +40,14 @@ public class EmployeeDetailController {
 
 		for( EmployeeSalary empsal : empsalAll.getEmployeesalaryList()){
 			EmployeeInfo empinfo = restTemplate.getForObject("http://employee-info-service/info/"+empsal.getId(), EmployeeInfo.class);
-
-			empDetailsList.add(new EmployeeDetails(empinfo.getId(), empinfo.getName(), empinfo.getJobStage(), empinfo.getJobRole(),
+			
+            if(empinfo != null) {
+            	logger.info("Employee found with details as .. " + empinfo.toString());
+			 empDetailsList.add(new EmployeeDetails(empinfo.getId(), empinfo.getName(), empinfo.getJobStage(), empinfo.getJobRole(),
 					empinfo.getSkills(), empinfo.getHobbies(), empsal.getSalary()));
+            }else {
+            	logger.info("No Emp Found with ID.. " + empsal.getId());
+            }
 		}
 		
 		return empDetailsList;
