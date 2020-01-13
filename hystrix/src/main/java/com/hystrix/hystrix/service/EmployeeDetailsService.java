@@ -24,20 +24,25 @@ public class EmployeeDetailsService {
 	
 	Logger logger = LoggerFactory.getLogger(EmployeeDetailsService.class);
 
-	@GetMapping("/getAllEmployeeDetails")
 	@HystrixCommand(fallbackMethod="getAllDetailsFallBack")
 	public List<EmployeeDetails> getAllDetails() {
 
-		logger.info("Inside getAllDetails");
 		List<EmployeeDetails> empDetailsList = new ArrayList<EmployeeDetails>();
+		logger.info("Calling to employee-salary-service start");
 		EmployeeSalaryList empsalAll = restTemplate.getForObject("http://employee-salary-service/salary/",
 				EmployeeSalaryList.class);
+		logger.info("Call to employee-salary-service finished");
 
 		for( EmployeeSalary empsal : empsalAll.getEmployeesalaryList()){
 			EmployeeInfo empinfo = restTemplate.getForObject("http://employee-info-service/info/"+empsal.getId(), EmployeeInfo.class);
-
-			empDetailsList.add(new EmployeeDetails(empinfo.getId(), empinfo.getName(), empinfo.getJobStage(), empinfo.getJobRole(),
+			
+            if(empinfo != null) {
+            	logger.info("Employee found with details as .. " + empinfo.toString());
+			 empDetailsList.add(new EmployeeDetails(empinfo.getId(), empinfo.getName(), empinfo.getJobStage(), empinfo.getJobRole(),
 					empinfo.getSkills(), empinfo.getHobbies(), empsal.getSalary()));
+            }else {
+            	logger.info("No Emp Found with ID.. " + empsal.getId());
+            }
 		}
 		
 		return empDetailsList;
