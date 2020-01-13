@@ -3,6 +3,8 @@ services:
   eureka:
     #image: "discoveryserver:2.0.0-SNAPSHOT"
     build: ./discoveryServer
+    image: eureka
+    container_name: eureka
     hostname: "localhost"
     networks:
      - microservice-docker
@@ -34,6 +36,8 @@ services:
   employee-salary-service:
     #image: "employee-salary-service:2.0.0-SNAPSHOT"
     build: ./employee-salary-service
+    image: employee-salary-service
+    container_name: employee-salary-service
     hostname: "employee-salary-service"
     networks:
      - microservice-docker
@@ -50,6 +54,8 @@ services:
   employee-info-service:
     #image: "employee-info-service:2.0.0-SNAPSHOT"
     build: ./employee-info-service
+    image: employee-info-service
+    container_name: employee-info-service
     hostname: "employee-info-service"
     networks:
      - microservice-docker
@@ -69,6 +75,8 @@ services:
   employee-details-service:
     #image: "employee-details-service:2.0.0-SNAPSHOT"
     build: ./employee-details-service
+    image: employee-details-service
+    container_name: employee-details-service
     hostname: "employee-details-service"
     networks:
      - microservice-docker
@@ -87,6 +95,8 @@ services:
   hystrix-service:
     #image: "hystrix:2.0.0-SNAPSHOT"
     build: ./hystrix
+    image: hystrix
+    container_name: hystrix
     hostname: "localhost"
     networks:
      - microservice-docker
