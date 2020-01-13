@@ -1,2 +1,11 @@
 # microservice-docker
 microservice-docker project
+
+Steps to run this app..
+
+1.Build the jar file by mvn clean install -DskipTests
+As of now docker image build is not done by maven docker build. If it is needed pls uncomment <goal>build</goal> under respective project 
+pom.xml
+
+2. After successful build type docker-compose up --build and hit enter
+
