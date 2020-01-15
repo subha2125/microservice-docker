@@ -92,6 +92,7 @@ Then
 
 docker push hostname:port/username/<image-name>:tag
 docker push localhost:5000/eshghos/eureka:latest
+docker pull localhost:5000/eshghos/eureka:latest
 
 ** Swarm ***
 ----------------------------
@@ -110,11 +111,20 @@ Result of above command --This node joined a swarm as a worker.
 
 docker service create --replicas=3 imagename
 
-docker service create --name="my-service" --replicas=3 -p 8080:80 imagename
+docker service create --name="eureka" --replicas=3 -p 8761:8761 eshghos/eureka
+
+*** Shoe no of nodes***
 docker node ls
+
+*** Shoe no of service***
 docker service ls
-docker service rm
-docker service scale my-service=2
+docker service rm service-name
+docker service scale service-name=2
+
+docker-machine regenerate-certs manager1
+
+** Check staus of a service
+docker service ps 0s1gvre8hqx4ivk0a8ux8fgm2
 
 
 
@@ -123,6 +133,10 @@ Docker Swarm VS -- External Virtual Swich (VS) Name -- https://docs.docker.com/m
 ** Create and Run a VM by Hyper-V**
 _______________________________________
 docker-machine create -d hyperv --hyperv-virtual-switch "Docker Swarm VS" manager1
+docker-machine create -d hyperv --hyperv-virtual-switch "Docker Swarm VS" worker1
+
+Run manager1 as below
+
 docker-machine env manager1
 docker-machine env manager1 | Invoke-Expression
 #docker-machine.exe env --shell powershell manager1
