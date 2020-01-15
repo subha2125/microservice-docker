@@ -1,0 +1,259 @@
+docker pull imagename
+docker run -it -d imagename
+docker images
+docker image prune
+dcoekr rmi imagename
+
+List of all stop container
+================================
+docker ps -aq -f status=exited
+docker container start containerId
+docker container stop containerId
+
+Remove container
+==================
+docker rm -f containerName
+
+Build Spring Boot App as Docker image
+==============================================
+
+docker build -f Dockerfile -t docker-spring-boot .
+docker build -f Dockerfile -t discoveryserver .
+docker build -f Dockerfile -t ratings-data-service .
+docker build -f Dockerfile -t movie-info-service .
+docker build -f Dockerfile -t movie-catalog-service .
+
+where docker-spring-boot name of the jar and . represents current directory
+
+== show all image==
+
+docker -ps -a
+
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' 44474ea0e16e
+
+docker network create -d bridge --subnet=172.19.0.0/16 microservice
+
+docker network create -d bridge microservice
+
+Run an Image
+====================
+
+docker run -p port:port imagename
+
+docker run -p 8085:8085 --network="microservice"  --name docker-spring-boot --hostname IN-00207677 --ip 172.19.112.1  docker-spring-boot
+docker run -p 8761:8761 --network="microservice"  --name eureka discoveryserver
+docker run -p 8083:8083 --network="microservice"  --name ratings-data-service --hostname IN-00207677 ratings-data-service
+docker run -p 8082:8082 --network="microservice"  --name movie-info-service --hostname IN-00207677 movie-info-service
+docker run -p 8081:8081 --network="microservice"  --name movie-catalog-service --hostname IN-00207677 movie-catalog-service
+
+
+
+
+docker stop containerName
+
+docker restart containerName
+
+docker-compose restart containerName
+
+docker-compose build or docker-compose up --build
+
+docker volume create volumeName // Creates a volume with name as specified in /var/lib/docker/volumes
+
+docker volume ls
+
+docker run -e DS_LICENSE=accept --net="host" datastax/dse-studio
+
+docker run -e DS_LICENSE=accept datastax/dse-server
+
+== Execute a container===
+
+docker exec -it containerId bash(for unix)
+
+docker exec -it 216b55489d35
+docker commit containerId/Imageid eshghos/ubuntu
+
+*** Docker Tag ****
+
+docker tag spring-jpa-app:latest eshghos/microservice2019:tag1
+docker tag insapp-os:latest eshghos/ms-openshift2019:latest
+
+docker push eshghos/ubuntu
+docker push eshghos/microservice2019:tag1
+
+** Private Repo ***
+---------------------------
+
+Download Registry and docker-regsitry-ui image and run . refer to C:\Users\eshghos\Downloads\Docs\Project\docker-registry
+
+docker tag <image-name>:tag hostname:port/username/<image-name>:tag
+docker tag eureka:latest localhost:5000/eshghos/eureka:latest
+
+Then 
+
+docker push hostname:port/username/<image-name>:tag
+docker push localhost:5000/eshghos/eureka:latest
+
+** Swarm ***
+----------------------------
+docker swarm init
+docker swarm leave --force
+
+Swarm initialized: current node (fg0kmnvsr0t5upyyvxyptawrw) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-68os2pefxc6q25m3zi7xlrap5ado42u7pam6ykr8ycr12qe9w8-dgavcnvek8pmw2nhno97emk67 192.168.65.3:2377
+
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+Result of above command --This node joined a swarm as a worker.
+
+docker service create --replicas=3 imagename
+
+docker service create --name="my-service" --replicas=3 -p 8080:80 imagename
+docker node ls
+docker service ls
+docker service rm
+docker service scale my-service=2
+
+
+
+Docker Swarm VS -- External Virtual Swich (VS) Name -- https://docs.docker.com/machine/drivers/hyper-v/#example
+
+** Create and Run a VM by Hyper-V**
+_______________________________________
+docker-machine create -d hyperv --hyperv-virtual-switch "Docker Swarm VS" manager1
+docker-machine env manager1
+docker-machine env manager1 | Invoke-Expression
+#docker-machine.exe env --shell powershell manager1
+
+-- Command to get Tokens from manager nodes--
+
+docker swarm join-token worker
+
+
+
+docker push eshghos/ms-openshift2019:latest
+
+docker rm containerId/Imageid
+docker rmi containerId/Imageid
+
+docker run -e DS_LICENSE=accept datastax/dse-studio
+
+=== Data stax Cassandra ===
+
+Create a DSE database container
+===========================================
+docker run -e DS_LICENSE=accept --name dse-server -d datastax/dse-server
+
+Create a DSE container with Graph enabled
+==========================================
+docker run -e DS_LICENSE=accept --name dse-server -d datastax/dse-server -g
+
+Create a DSE container with Analytics (Spark) enabled
+==============================================
+docker run -e DS_LICENSE=accept --name dse-server -d datastax/dse-server -k
+
+Create a DSE container with Search enabled
+===============================================
+docker run -e DS_LICENSE=accept --name dse-server -d datastax/dse-server -s
+
+Create a DSE container with Search, Analytics, and Graph enabled
+=============================================================
+docker run -e DS_LICENSE=accept --name dse-server -d datastax/dse-server -s -k -g
+
+
+DataStax Studio
+====================================
+
+docker run -e DS_LICENSE=accept --link dse-server --name dse-studio -p 9091:9091 -d datastax/dse-studio
+
+Open a browser and go to http://DOCKER_HOST_IP:9091
+
+Create the new connection using my-dse as the hostname
+
+DataStax OpsCenter
+===================================
+First create an OpsCenter container.
+
+docker run -e DS_LICENSE=accept -d -p 8888:8888 --name dse-opscenter datastax/dse-opscenter
+
+
+Create a DataStax Enterprise (DSE) server container that is linked to the OpsCenter container.
+
+docker run -e DS_LICENSE=accept --link dse-opscenter:opscenter --name dse-server -d datastax/dse-server
+
+-d detaches the process and runs it in the background. Otherwise, we would just be watching an empty Nginx prompt and wouldn't be able to use this terminal until we killed Nginx.
+
+docker run -e DS_LICENSE=accept --name dse-server -d datastax/dse-server
+
+Get the DSE container IP address:
+
+On the host running the DSE container run
+
+docker inspect my-dse | grep '"IPAddress":'
+
+Open a browser and go to http://DOCKER_HOST_IP:8888.
+
+
+docker exec -it f8dc012754af nodetool status
+
+docker exec -it f8dc012754af cqlsh
+
+Docker Cassndra
+
+docker run --name amx-cassandra-cluster --network host -d cassandra:latest
+
+**** Rabbit MQ ***
+===============================
+
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+
+http://localhost:15672/#/
+
+Multi Cluster Cassandra
+=============================
+PS C:\Users\eshghos> docker run -p 9042:9042 --name cas1  -e CASSANDRA_CLUSTER_NAME=amx-cassandra-cluster -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch -e CASSANDRA_DC=datacenter1 -d cassandra
+ 
+423d6d0e59acd711281c27e956a1af18ddb1446644f790686f2595640d62f6be
+
+PS C:\Users\eshghos> docker inspect --format='{{ .NetworkSettings.IPAddress }}' cas1
+
+172.17.0.2
+
+PS C:\Users\eshghos> docker run --name cas2 -e CASSANDRA_SEEDS="$(docker inspect --format='{{ .NetworkSettings.IPAddress }}' cas1)" -e CASSANDRA_CLUSTER_NAME=amx-cassandra-cluster -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch -e CASSANDRA_DC=datacenter1 -d cassandra
+
+8d907fa72da91afd27174510d7e3983450a890eeba963080bb42542e32412307
+
+PS C:\Users\eshghos> docker run --name cas3 -e CASSANDRA_SEEDS="$(docker inspect --format='{{ .NetworkSettings.IPAddress }}' cas1)" -e CASSANDRA_CLUSTER_NAME=amx-cassandra-cluster -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch -e CASSANDRA_DC=datacenter2 -d cassandra
+
+9274281a900315472b2e251d042655068e2cb816b6e499f7cab4232e23ea660e
+
+PS C:\Users\eshghos>
+PS C:\Users\eshghos> docker exec -ti cas1 nodetool status
+
+Datacenter: datacenter1
+=======================
+Status=Up/Down
+|/ State=Normal/Leaving/Joining/Moving
+--  Address     Load       Tokens       Owns (effective)  Host ID                               Rack
+UJ  172.17.0.3  60.29 KiB  256          ?                 2883933c-7155-441f-8f03-8a3eb1389b49  rack1
+UN  172.17.0.2  103.67 KiB  256          100.0%            d370a3c7-5d53-4069-b096-42c645659be8  rack1
+
+PS C:\Users\eshghos> docker exec -ti cas3 nodetool status
+
+Error response from daemon: Container 9274281a900315472b2e251d042655068e2cb816b6e499f7cab4232e23ea660e is not running
+
+PS C:\Users\eshghos> docker exec -ti cas1 nodetool status
+Datacenter: datacenter1
+=======================
+Status=Up/Down
+|/ State=Normal/Leaving/Joining/Moving
+--  Address     Load       Tokens       Owns (effective)  Host ID                               Rack
+UN  172.17.0.3  88.9 KiB   256          100.0%            2883933c-7155-441f-8f03-8a3eb1389b49  rack1
+UN  172.17.0.2  108.62 KiB  256          100.0%            d370a3c7-5d53-4069-b096-42c645659be8  rack1
+
+docker exec -ti cas1 cqlsh
+
+PS C:\Users\eshghos>
+
