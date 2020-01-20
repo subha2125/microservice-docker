@@ -46,9 +46,6 @@ docker run -p 8083:8083 --network="microservice"  --name ratings-data-service --
 docker run -p 8082:8082 --network="microservice"  --name movie-info-service --hostname IN-00207677 movie-info-service
 docker run -p 8081:8081 --network="microservice"  --name movie-catalog-service --hostname IN-00207677 movie-catalog-service
 
-
-
-
 docker stop containerName
 
 docker restart containerName
@@ -57,7 +54,24 @@ docker-compose restart containerName
 
 docker-compose build or docker-compose up --build
 
+docker-compose up -d --scale service-name=4
+
 docker volume create volumeName // Creates a volume with name as specified in /var/lib/docker/volumes
+
+-- Voulme Mount, Mounted from docker internal volume named as data-volume
+
+docker create voulme data-volume
+
+** In case of volume mount***
+----------------------------
+docker run -p 8081:8081 --network="microservice"  --name --mount type=volume,source="data-volume,target=/app \
+movie-catalog-service --hostname IN-00207677 movie-catalog-service 
+
+** In case of bind mount***
+----------------------------
+
+docker run -p 8081:8081 --network="microservice"  --name --mount type=bind,source="data-volume,target=/app \
+movie-catalog-service --hostname IN-00207677 movie-catalog-service 
 
 docker volume ls
 
@@ -111,8 +125,31 @@ Result of above command --This node joined a swarm as a worker.
 
 docker service create --replicas=3 imagename
 
-docker service create --name="eureka" --replicas=3 -p 8761:8761 eshghos/eureka
+docker service create --name="eureka" --replicas=3 --mount source=eureka-volume,target=/app -p 8761:8761 eshghos/eureka
+docker service create --name="eureka" --replicas=3 --mount source=eureka-volume,target=/app --publish published=8762,target=8761 eshghos/eureka
 
+** Update to new image**
+---------------------------
+docker service update --image imagename:version web
+docker service update --image nginx:1.14.0 serviceName
+
+** Down a node***
+
+docker node update --availability drain worker1
+
+Shared volume from another container, in this case from eureka ran earlier
+
+docker run -ti --name=eureka2 --volumes-from eureka eshghos/eureka
+docker run -ti --name=eureka2 --volumes-from eureka:ro eshghos/eureka  -- Readonly access
+
+https://docs.docker.com/storage/volumes/
+
+The docker service create command does not support the -v or --volume flag. 
+When mounting a volume into a service’s containers, you must use the --mount flag.
+
+Update Port
+docker service update --publish-add published=<PUBLISHED-PORT>,target=<CONTAINER-PORT> service-name
+  
 *** Shoe no of nodes***
 docker node ls
 
@@ -120,6 +157,9 @@ docker node ls
 docker service ls
 docker service rm service-name
 docker service scale service-name=2
+docker service inspect --pretty service-name
+docker service ps service-name
+docker node update --availability drain worker1
 
 docker-machine regenerate-certs manager1
 

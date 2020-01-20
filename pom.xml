@@ -15,7 +15,7 @@
 		<module>employee-salary-service</module>
 		<module>employee-details-service</module>
 		<module>hystrix</module>
-		<!--<module>configserver</module> -->
+		<module>configserver</module>
 		<module>discoveryServer</module>
 	</modules>
 	

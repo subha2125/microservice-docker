@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.ericsson</groupId>
 	<artifactId>configserver</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>2.0.0-SNAPSHOT</version>
 	<name>configserver</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -53,10 +53,41 @@
 
 	<build>
 		<plugins>
+			<!-- <plugin> <groupId>com.google.cloud.tools</groupId> <artifactId>jib-maven-plugin</artifactId> 
+				<configuration> <to> <image>${project.build.finalName}</image> </to> </configuration> 
+				</plugin> -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.9</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<goals>
+							<!--<goal>build</goal> -->
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<imageName>${project.build.finalName}.jar</imageName>
+					<imageTags>
+						<imageTag>${project.version}</imageTag>
+						<imageTag>latest</imageTag>
+					</imageTags>
+					<baseImage>java:8</baseImage>
+					<repository>${project.artifactId}</repository>
+					<tag>${project.version}</tag>
+					<buildArgs>
+						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
+				</configuration>
+			</plugin>
 		</plugins>
+		<finalName>configserver</finalName>
 	</build>
 </project>

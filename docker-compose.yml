@@ -11,11 +11,25 @@ services:
     ports:
      - "8761:8761"
      
-  #config-server:
-    #image: "config-server:2.0.0-SNAPSHOT"
-    #hostname: "localhost"
-    #ports:
-    # - "8888:8888"
+  config-server:
+    build: ./configserver
+    image: configserver
+    container_name: config-server
+    hostname: "localhost"
+    networks:
+     - microservice-docker
+    ports:
+      - "8888:8888"
+     
+  zipkin-service:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    hostname: "localhost"
+    networks:
+     - microservice-docker
+    ports:
+      - "9411:9411"
+     
   mysql:
     image: mysql
     container_name: mysqlDB
@@ -86,6 +100,8 @@ services:
       - employee-info-service
     depends_on:
       - eureka
+      - config-server
+      - zipkin-service
     environment:
        EUREKA_HOST: eureka
        EUREKA_PORT: 8761
@@ -109,6 +125,7 @@ services:
        EUREKA_PORT: 8761
     ports:
       - "8091:8090"
+
 networks:
   microservice-docker:
 volumes:
