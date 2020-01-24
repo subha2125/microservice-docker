@@ -22,7 +22,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableSwagger2
-@EnableAutoConfiguration(exclude=DataSourceAutoConfiguration.class)
+/*@EnableAutoConfiguration(exclude=DataSourceAutoConfiguration.class)*/
 public class EmployeeDetailsServiceApplication {
 	
 	

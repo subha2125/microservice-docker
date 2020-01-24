@@ -68,7 +68,7 @@ public class EmployeeDetailController {
 	
 	@RequestMapping("/hello")
 	public String greeting() {
-		return "Hello User";
+		return "Hello Employee";
 	}
 	
 	@RequestMapping("/empInfo")
