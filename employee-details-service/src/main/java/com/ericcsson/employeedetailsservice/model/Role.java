@@ -7,12 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter
 @Setter
 @NoArgsConstructor
 public class Role {
@@ -25,4 +25,19 @@ public class Role {
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
+
+	public int getRole_id() {
+		return role_id;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	@JsonBackReference
+	public User getUser() {
+		return user;
+	}
+	
+	
 }

@@ -10,12 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter
 @Setter
+@NoArgsConstructor
 public class User {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,4 +30,26 @@ public class User {
 	@OneToMany(mappedBy="user",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Role> roles;
 
+	public int getUser_id() {
+		return user_id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	@JsonManagedReference
+	@JsonIgnore
+	public Set<Role> getRoles() {
+		return roles;
+	}
+	
 }
