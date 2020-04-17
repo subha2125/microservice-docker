@@ -25,13 +25,13 @@ public class EmployeeUserDetailsService implements UserDetailsService {
 		User user = repository.findByUsername(username);
 		EmployeeUserDetails userDetails = null;
 		if (user != null) {
-			logger.info("User found with name= "+ user.getUsername() + user.getPassword() 
+			logger.debug("User found with name= "+ user.getUsername() + user.getPassword() 
 			   +"Roles.." );
-			user.getRoles().stream().forEach(role -> System.out.println(role.getRole()));
+			user.getRoles().stream().forEach(role -> logger.debug(role.getRole()));
 			userDetails = new EmployeeUserDetails();
 			userDetails.setUser(user);
 		} else {
-			logger.info("User Not found with" + username);
+			logger.error("User Not found with" + username);
 			throw new UsernameNotFoundException("User not exist with name : " + username);
 		}
 		return userDetails;
