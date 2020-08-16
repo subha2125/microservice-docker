@@ -8,4 +8,5 @@ As of now docker image build is not done by maven docker build. If it is needed 
 pom.xml
 
 2. After successful build type docker-compose up --build and hit enter
+3. Docker Automated Build on 08/16/2020
 
