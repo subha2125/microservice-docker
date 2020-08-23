@@ -185,6 +185,12 @@ docker-machine env manager1 | Invoke-Expression
 
 docker swarm join-token worker
 
+---- Mysql____
+---------------------
+
+docker exec -it mysqlDB mysql -u root -p
+Enter mysql pass
+
 
 
 docker push eshghos/ms-openshift2019:latest

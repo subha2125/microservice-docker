@@ -1,0 +1,112 @@
+or create a new repository on the command line
+echo "# microservice-training-code" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+
+
+git remote add origin https://github.com/subha2125/microservice-training-code.git
+git push -u origin master
+
+…or push an existing repository from the command line
+
+git remote add origin https://github.com/subha2125/microservice-training-code.git
+git push -u origin master
+
+git remote add origin https://github.com/subha2125/ComboQuery.git
+git remote add origin https://github.com/subha2125/ComboQuery.git
+git push -u origin master
+
+parameswaribala@gmail.com
+
+-- Delete from Git--
+
+>git rm --cached pom.xml
+git rm --cached -r src
+
+*****Turn off Compresion ***
+---------------------------------
+
+git config --global core.compression 0
+
+*** Filename to long ***
+--------------------------------
+git clone -b EDA-NEWMETRO-PI10-Dec2019 https://gitlab.mana.ericssondevops.com/tmo-bundle-deal-projects/eda/eda-development.git 
+git config --system core.longpaths true
+
+**** Clone a Single Branch ***
+------------------------------------
+git clone --single-branch --branch Sledgehammer https://gitlab.mana.ericssondevops.com/tmo-bundle-deal-projects/eda/eda-development.git
+git clone --single-branch --branch Sledgehammer ssh://git@git.mana.ericssondevops.com:2222/tmo-bundle-deal-projects/eda/eda-development.git
+
+*** Shallow Clone Fetch only current commit as depth is 1***
+------------------------------------------------------
+git clone --single-branch --branch Sledgehammer --depth 1 ssh://git@git.mana.ericssondevops.com:2222/tmo-bundle-deal-projects/eda/eda-development.git
+
+Convert to Full Repo
+------------------------------
+
+git fetch --depth=2147483647 Or
+git fetch --unshallow 
+
+Now do a regular pull
+_________________________
+
+git pull --all
+
+git pull origin EDA-NEWMETRO-Dec2019
+
+git checkout EDA-NEWMETRO-PI10-Dec2019
+git pull origin EDA-NEWMETRO-PI10-Dec2019
+git pull origin EDA-NEWMETRO-PI10-Dec2019-200609
+
+git push --set-upstream origin feature/shreya
+
+git checkout -b EDA-NEWMETRO-PI10-Dec2019-200609
+
+git pull origin EDA-RMJNITTEST-D19JAN-TEST
+
+In its default mode, git pull is shorthand for git fetch followed by git merge FETCH_HEAD
+
+git pull = git fetch + git merge FETCH_HEAD
+
+git reset --hard HEAD  --Reset the status with HEAD
+git reset --hard origin/EDA-NEWMETRO-PI10-Dec2019
+git reset --hard SHA
+
+********** Create Patch **********
+----------------------------------------------
+Create it -> git diff --patch > C:\Users\eshghos\Downloads\Docs\Project-Doc\TMO\Femtocell\Git-patch\jdv-nap-resources.patch
+
+Apply it - > git apply C:\Users\eshghos\Downloads\Docs\Project-Doc\TMO\Femtocell\Git-patch\jdv-nap-resources.patch
+
+git apply C:\Users\eshghos\Downloads\Docs\Project-Doc\TMO\Femtocell\Git-patch\jdv-nap-resources.patch --ignore-space-change --ignore-whitespace
+
+Revert it - git apply -R C:\Users\eshghos\Downloads\Docs\Project-Doc\TMO\Femtocell\Git-patch\jdv-nap-resources.patch
+
+mvn clean package -Dorg.slf4j.simpleLogger.defaultLogLevel=debug
+
+
+********* SSH Key ******
+--------------------------------
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC90+3Vw1V6GWX/8z3wQk5uzT/XOna/Wl8BJ0koaovMWxIpYbDdFtrsPjhEQVhvYRwvvp0DMtChyLndUJACfjK3HQMXJAAjmVABnKlArwPgAVEvdKVct7zVhRKkWjlH3VwbdTdnnYEaTfsV53h2uPkoYR8q1T0ZUVNsjrwffolIHyY+CwtO2DouCbMfS2Pu9LdwLHUiBibf7GLjLZU2eLLhnkJnpvTymbNWaqrbgxt+iCl03AsJIJUdCxYRhMNRPLapgKH9u2p8YJxN8LugR1eEL8CBbNAiJDsIYZCVB+fYlcuALZxCEIh5N39QCNUv0YOM3pjbg1i81QXnadNIeBEt eshghos@IN-00207677
+
+
+
+mvn help:effective-pom
+
+*** XSD to JAXB ***
+---------------------------
+
+xjc -d src -p com.ericsson.jdv.comboquery.consolidator.schemas.request ConsolidatorComboQuery.xsd 
+
+xjc -d src -p com.ericsson.jdv.comboquery.schemas.cs.air AIR_SubscriptionInfo.xsd
+
+xjc -d napsrc -p com.ericsson.schemas.ma.ca.nap NAP.xsd
+
+xjc -d src -p com.ericsson.schemas.comboquery.ma.ca.tmorpt ComboQuery.xsd
+
+xjc -d src -p com.ericsson.schemas.ma.ca.tmorpt reverseMapping.xsd
+
+com.ericsson.schemas.comboquery.ma.ca.tmorpt
