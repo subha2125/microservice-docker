@@ -1,0 +1,53 @@
+[‎8/‎29/‎2019 2:57 PM]  Subhayu Mukherjee M:  
+No Title 
+cd C:\Users\esumukh\Documents\workspace-spring-tool-suite-4-4.3.1.RELEASE\employee-salary-service
+docker build -f Dockerfile -t employee-salary-service .
+docker run -p 8183:8183 --network="microservice"  --name employee-salary-service --hostname IN-00207677 employee-salary-service
+docker run -p 8183:8183 --name employee-salary-service employee-salary-service
+
+cd C:\Users\esumukh\Documents\workspace-spring-tool-suite-4-4.3.1.RELEASE\employee-info-service
+docker build -f Dockerfile -t employee-info-service .
+docker run -p 8184:8184 --network="microservice"  --name employee-info-service --hostname IN-00207677 employee-info-service
+docker run -p 8184:8184 --name employee-info-service employee-info-service
+
+cd C:\Users\esumukh\Documents\workspace-spring-tool-suite-4-4.3.1.RELEASE\employee-details-service
+docker build -f Dockerfile -t employee-details-service .
+docker run -p 8181:8181 --network="microservice"  --name employee-details-service --hostname IN-00207677 employee-details-service
+docker run -p 8181:8181 --name employee-details-service employee-details-service
+
+cd C:\Users\esumukh\Documents\workspace-spring-tool-suite-4-4.3.1.RELEASE\discoveryServer
+docker build -f Dockerfile -t discovery-server . 
+docker run -p 8761:8761 --name discovery-server discovery-server
+
+** Docker push ***
+------------------------------------------------
+docker tag local-image:tagname new-repo:tagname
+docker push new-repo:tagname
+
+
+docker tag sample-hystrix-eureka:2.0.0-SNAPSHOT eshghos/eureka:latest
+docker push eshghos/eureka:latest
+
+docker tag employee-salary-service:2.0.0-SNAPSHOT eshghos/employee-salary-service:latest
+docker push eshghos/employee-salary-service:latest
+
+docker tag employee-details-service:2.0.0-SNAPSHOT eshghos/employee-details-service:latest
+docker push eshghos/employee-details-service:latest
+
+docker tag employee-info-service:2.0.0-SNAPSHOT eshghos/employee-info-service:latest
+docker push eshghos/employee-info-service:latest
+
+
+docker push eshghos/ms-openshift2019:latest
+
+**** Openshift ***
+-----------------------------
+
+oc new-app eshghos/eureka:latest --name=eureka
+oc new-app eshghos/employee-salary-service:latest --name=employee-salary-service
+oc new-app eshghos/employee-info-service:latest --name=employee-info-service
+oc new-app eshghos/employee-details-service:latest --name=employee-details-service
+
+oc status
+oc get pods
+
