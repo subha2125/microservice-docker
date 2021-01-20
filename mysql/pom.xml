@@ -69,6 +69,13 @@
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>com.mkyong.jdbc.JDBCExample2</mainClass>
+						</manifest>
+					</archive>
 				</configuration>
 			</plugin>
 
