@@ -25,7 +25,7 @@ public class JDBCExample2 {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                String userName = resultSet.getString("userName");
+                String userName = resultSet.getString("user_name");
                 String password = resultSet.getString("password");
                 String roles = resultSet.getString("roles");
 
