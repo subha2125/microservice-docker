@@ -1,1 +1,1 @@
-Main-Class: com.mkyong.jdbc.model.Employee.JDBCExample2
+Main-Class: com.mkyong.jdbc.JDBCExample2
