@@ -15,7 +15,7 @@ public class JDBCExample2 {
 
         List<Employee> result = new ArrayList<>();
 
-        String SQL_SELECT = "Select * from User";
+        String SQL_SELECT = "Select * from user";
 
         // auto close connection and preparedStatement
         try (Connection conn = DriverManager.getConnection(
