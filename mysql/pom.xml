@@ -48,7 +48,7 @@
 					  <manifest>
 						<addClasspath>true</addClasspath>
 						<classpathPrefix>lib/</classpathPrefix>
-						<mainClass>com.mkyong.jdbc.model.Employee.JDBCExample2</mainClass>
+						<mainClass>com.mkyong.jdbc.JDBCExample2</mainClass>
 					  </manifest>
 					</archive>
 				  </configuration>
