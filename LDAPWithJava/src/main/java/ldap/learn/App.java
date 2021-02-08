@@ -1,12 +1,22 @@
 package ldap.learn;
 
+import java.io.IOException;
+import java.util.Hashtable;
 import java.util.Properties;
 
 import javax.naming.AuthenticationException;
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
-import javax.naming.directory.*;
+import javax.naming.directory.Attribute;
+import javax.naming.directory.Attributes;
+import javax.naming.directory.BasicAttribute;
+import javax.naming.directory.BasicAttributes;
+import javax.naming.directory.DirContext;
+import javax.naming.directory.InitialDirContext;
+import javax.naming.directory.ModificationItem;
+import javax.naming.directory.SearchControls;
+import javax.naming.directory.SearchResult;
 
 public class App {
 
@@ -14,23 +24,27 @@ public class App {
 
 	/* create connection during object creation */
 	public void newConnection() {
-		Properties env = new Properties();
-		env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-		env.put(Context.PROVIDER_URL, "ldaps://secureldaps:10636");
-		//env.put(Context.SECURITY_PRINCIPAL, "uid=admin, ou=system");
-		//env.put(Context.SECURITY_CREDENTIALS, "secret");
-		env.put(Context.SECURITY_PRINCIPAL, "uid=sghosh,ou=users,ou=system");
-		env.put(Context.SECURITY_CREDENTIALS, "admin");
-		env.put(Context.SECURITY_AUTHENTICATION, "simple");
-		env.put(Context.SECURITY_PROTOCOL, "ssl");
-		
-		System.setProperty("javax.net.ssl.trustStore", "C:\\Users\\eshghos\\Downloads\\Docs\\Project\\Ldap-Java\\Cert\\trustedldaps.ks");
-		System.setProperty("javax.net.ssl.trustStorePassword", "secureldaps");
-		//System.setProperty("javax.net.debug","ssl");
-
 		try {
+			final Hashtable<String, String> env = new Hashtable<>(10);
+			env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+			env.put(Context.PROVIDER_URL, "ldaps://secureldaps:10636");
+			env.put(Context.SECURITY_PRINCIPAL, "uid=sghosh,ou=users,ou=system");
+			env.put(Context.SECURITY_CREDENTIALS, "admin");
+			env.put(Context.SECURITY_AUTHENTICATION, "simple");
+			env.put(Context.SECURITY_PROTOCOL, "ssl");
+			
+			final Properties props = new Properties();
+	        props.load(App.class.getResourceAsStream("/keystore.properties"));
+	        
+	        Properties systenProps = System.getProperties();
+	        systenProps.setProperty("javax.net.ssl.trustStore", props.getProperty("ldaps.trustStore"));
+	        systenProps.setProperty("javax.net.ssl.trustStorePassword", props.getProperty("ldaps.trustStorePassword"));
+	        
 			connection = new InitialDirContext(env);
 			System.out.println("Connection established!" + connection);
+			getAllUsers();
+		}catch (IOException ie) {
+			System.out.println(ie.getMessage());
 		} catch (AuthenticationException ex) {
 			System.out.println(ex.getMessage());
 		} catch (NamingException ne) {
