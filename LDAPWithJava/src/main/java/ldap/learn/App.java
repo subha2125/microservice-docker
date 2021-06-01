@@ -25,7 +25,7 @@ public class App {
 	/* create connection during object creation */
 	public void newConnection() {
 		try {
-			final Hashtable<String, String> env = new Hashtable<>(10);
+			final Hashtable<String, String> env = new Hashtable<String, String>(10);
 			env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 			env.put(Context.PROVIDER_URL, "ldaps://secureldaps:10636");
 			env.put(Context.SECURITY_PRINCIPAL, "uid=sghosh,ou=users,ou=system");
