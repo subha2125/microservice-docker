@@ -24,7 +24,7 @@ import com.ericcsson.employeedetailsservice.repository.RoleRepository;
 import com.ericcsson.employeedetailsservice.repository.UserRepository;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/details")
 public class EmployeeAddController {
 	
 	@Autowired

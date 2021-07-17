@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
 import com.hystrix.hystrix.models.EmployeeDetails;
@@ -15,6 +14,7 @@ import com.hystrix.hystrix.models.EmployeeInfo;
 import com.hystrix.hystrix.models.EmployeeSalary;
 import com.hystrix.hystrix.models.EmployeeSalaryList;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 
 @Service
 public class EmployeeDetailsService {
@@ -24,7 +24,12 @@ public class EmployeeDetailsService {
 	
 	Logger logger = LoggerFactory.getLogger(EmployeeDetailsService.class);
 
-	@HystrixCommand(fallbackMethod="getAllDetailsFallBack")
+	/** Circuit Breaker and BulkHead Pattern with threadPoolProperties **/
+	@HystrixCommand(fallbackMethod="getAllDetailsFallBack", 
+			commandProperties = { @HystrixProperty(name="execution.isolation.thread.timeoutInMilliSeconds", value="500")},
+			threadPoolProperties = { @HystrixProperty(name="hystrix.threadpool.S1.coreSize", value="15"),
+					@HystrixProperty(name="coreSize", value="25"),
+					@HystrixProperty(name="maxQueueSize", value="25")})
 	public List<EmployeeDetails> getAllDetails() {
 
 		List<EmployeeDetails> empDetailsList = new ArrayList<EmployeeDetails>();

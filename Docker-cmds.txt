@@ -8,6 +8,7 @@ docker logs [OPTIONS] CONTAINER
 docker logs tail -f  CONTAINER
 docker run --name test -d busybox sh -c "while true; do $(echo date); sleep 1; done"
 docker logs -f --until=2s test
+kubectl logs -f pod_name 
 
 List of all stop container
 ================================
@@ -39,6 +40,19 @@ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' 444
 docker network create -d bridge --subnet=172.19.0.0/16 microservice
 
 docker network create -d bridge microservice
+
+
+=== Run Container on Remote Host ===
+
+docker -H=ip:port run nginx
+docker -H=10.90.89.78:2375 run nginx
+
+=== Mysql with Volume Mount (Bind Mount(With directory on Host))==
+----------------------------------------------------------------------
+
+docker run --name=mysql-db -e MYSQL_ROOT_PASSWORD=db_pass123 -d mysql
+docker run -d --name mysql-db --mount type=bind,source=/opt/data,target=/var/lib/mysql -e MYSQL_ROOT_PASSWORD=db_pass123 mysql
+docker run -v /opt/data:/var/lib/mysql -d --name mysql-db -e MYSQL_ROOT_PASSWORD=db_pass123 mysql
 
 Gitlab Docker
 ================================
@@ -98,6 +112,8 @@ docker run -e DS_LICENSE=accept datastax/dse-server
 docker exec -it containerId bash(for unix)
 
 docker exec -it 216b55489d35
+kubectl exec -it lifecycle-demo -- /bin/bash 
+
 docker commit containerId/Imageid eshghos/ubuntu
 
 *** Docker Tag ****

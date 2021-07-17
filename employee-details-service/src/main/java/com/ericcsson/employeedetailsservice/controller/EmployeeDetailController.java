@@ -20,7 +20,7 @@ import com.ericcsson.employeedetailsservice.model.EmployeeSalaryList;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/details")
 public class EmployeeDetailController {
 
 	Logger logger = LoggerFactory.getLogger(EmployeeDetailController.class);

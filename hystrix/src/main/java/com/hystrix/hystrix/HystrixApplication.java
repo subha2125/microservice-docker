@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableHystrixDashboard
-@EnableCircuitBreaker
+//@EnableCircuitBreaker
 @EnableEurekaClient
 public class HystrixApplication {
 
