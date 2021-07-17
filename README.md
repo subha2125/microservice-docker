@@ -12,3 +12,8 @@ pom.xml
 3. Docker Automated Build on 08/16/2020
 4. Commiting employee-salary-service target for automated docker build
 
+# added Cloud Gateway
+# DB Password --  test
+# http://localhost:8989/actuator/hystrix.stream  --- API gateway hystrx
+# http://localhost:8090/hystrix -- open it and paste above url (http://localhost:8989/actuator/hystrix.stream)  to monitor stream
+
