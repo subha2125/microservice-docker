@@ -12,8 +12,8 @@ pom.xml
 3. Docker Automated Build on 08/16/2020
 4. Commiting employee-salary-service target for automated docker build
 
-# added Cloud Gateway
-# DB Password --  test
+# Added Cloud Gateway
+DB Password --  test
 http://localhost:8989/actuator/hystrix.stream  --- API gateway hystrx
 http://localhost:8090/hystrix -- open it and paste above url (http://localhost:8989/actuator/hystrix.stream)  to monitor stream
 
@@ -63,6 +63,8 @@ POST /emp-service/default
   "_primary_term" : 1
 }
 
-4. Add logstash.conf file
+4. Add logstash.conf file in logtash bin folder and run as logstash -f logstash.conf
+5. create index in Kibana http://localhost:5601/app/management/kibana/indexPatterns
+6. serahc with newly created index at Discover > http://localhost:5601/app/discover#/?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-15m,to:now))&_a=(columns:!(),filters:!(),index:f844e830-e7e3-11eb-9f28-450b1112987c,interval:auto,query:(language:kuery,query:''),sort:!())
 
 
