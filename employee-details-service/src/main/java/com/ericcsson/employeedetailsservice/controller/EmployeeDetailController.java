@@ -20,7 +20,7 @@ import com.ericcsson.employeedetailsservice.model.EmployeeSalaryList;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/details")
+@RequestMapping("/empdetails")
 public class EmployeeDetailController {
 
 	Logger logger = LoggerFactory.getLogger(EmployeeDetailController.class);
@@ -34,12 +34,12 @@ public class EmployeeDetailController {
 	public List<EmployeeDetails> getAllDetails() {
 		List<EmployeeDetails> empDetailsList = new ArrayList<EmployeeDetails>();
 		logger.info("Calling to employee-salary-service start");
-		EmployeeSalaryList empsalAll = restTemplate.getForObject("http://employee-salary-service/salary/",
+		EmployeeSalaryList empsalAll = restTemplate.getForObject("http://employee-salary-service/empsalary/salary/",
 				EmployeeSalaryList.class);
 		logger.info("Call to employee-salary-service finished");
 
 		for( EmployeeSalary empsal : empsalAll.getEmployeesalaryList()){
-			EmployeeInfo empinfo = restTemplate.getForObject("http://employee-info-service/info/"+empsal.getId(), EmployeeInfo.class);
+			EmployeeInfo empinfo = restTemplate.getForObject("http://employee-info-service/empinfo/info/"+empsal.getId(), EmployeeInfo.class);
 			
             if(empinfo != null) {
             	logger.info("Employee found with details as .. " + empinfo.toString());
@@ -57,8 +57,8 @@ public class EmployeeDetailController {
 
 	@RequestMapping("/{id}")
 	public EmployeeDetails employeeDetails(@PathVariable int id) {
-		EmployeeInfo empinfo = restTemplate.getForObject("http://employee-info-service/info/" + id, EmployeeInfo.class);
-		EmployeeSalary empsal = restTemplate.getForObject("http://employee-salary-service/salary/" + id,
+		EmployeeInfo empinfo = restTemplate.getForObject("http://employee-info-service/empinfo/info/" + id, EmployeeInfo.class);
+		EmployeeSalary empsal = restTemplate.getForObject("http://employee-salary-service/empsalary/salary/" + id,
 				EmployeeSalary.class);
 
 		return new EmployeeDetails(empinfo.getId(), empinfo.getName(), empinfo.getJobStage(), empinfo.getJobRole(),

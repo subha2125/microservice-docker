@@ -15,6 +15,7 @@ import com.ericcsson.employeesalaryservice.model.EmployeeSalaryList;
 
 
 @RestController
+@RequestMapping("/empsalary")
 public class EmployeeSalaryControl {
 	
 	@Autowired

@@ -17,6 +17,7 @@
 		<module>hystrix</module>
 		<module>configserver</module>
 		<module>discoveryServer</module>
+		<module>cloud-api-gateway</module>
 	</modules>
 	
 	<build>

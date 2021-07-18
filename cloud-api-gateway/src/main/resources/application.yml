@@ -7,21 +7,37 @@ spring:
         - id: employee-details-service
           uri: lb://employee-details-service
           predicates:
-            - Path=/details/**
+            - Path=/empdetails/**
           filters:
             - name: CircuitBreaker
               args:
                 name: employee-details-service
                 fallbackuri: forward:/empDeatilsFallBack
-        #- id: payment-service
-          #uri: lb://PAYMENT-SERVICE
-          #predicates:
-            #- Path=/payment/**
-          #filters:
-            #- name: CircuitBreaker
-              #args:
-               # name: payment-service
-                #fallbackuri: forward:/paymentFallback
+                
+        - id: employee-details-service
+          uri: lb://employee-details-service
+          predicates:
+            - Path=/emptest/**
+                
+        - id: employee-info-service
+          uri: lb://employee-info-service
+          predicates:
+            - Path=/empinfo/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: employee-info-service
+                fallbackuri: forward:/empInfoFallBack
+                
+        - id: employee-salary-service
+          uri: lb://employee-salary-service
+          predicates:
+            - Path=/empsalary/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: employee-salary-service
+                fallbackuri: forward:/empSalaryFallBack
                 
 
 server:

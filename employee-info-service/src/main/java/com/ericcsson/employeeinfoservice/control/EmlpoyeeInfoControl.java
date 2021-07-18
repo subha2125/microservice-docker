@@ -15,6 +15,7 @@ import com.ericcsson.employeeinfoservice.model.EmployeeInfo;
 import com.ericcsson.employeeinfoservice.repository.EmployeeInfoRepository;
 
 @RestController
+@RequestMapping("/empinfo")
 public class EmlpoyeeInfoControl {
 
 	@Autowired
