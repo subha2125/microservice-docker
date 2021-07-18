@@ -33,6 +33,7 @@ public class EmployeeDetailController {
 	@ApiOperation(value="Get All Emp Details",response=EmployeeDetails.class)
 	public List<EmployeeDetails> getAllDetails() {
 		List<EmployeeDetails> empDetailsList = new ArrayList<EmployeeDetails>();
+		logger.info("EmployeeDetail Service called :");
 		logger.info("Calling to employee-salary-service start");
 		EmployeeSalaryList empsalAll = restTemplate.getForObject("http://employee-salary-service/empsalary/salary/",
 				EmployeeSalaryList.class);
@@ -42,11 +43,11 @@ public class EmployeeDetailController {
 			EmployeeInfo empinfo = restTemplate.getForObject("http://employee-info-service/empinfo/info/"+empsal.getId(), EmployeeInfo.class);
 			
             if(empinfo != null) {
-            	logger.info("Employee found with details as .. " + empinfo.toString());
+            	logger.info("EmployeeDetail Service Employee found with details as .. " + empinfo.toString());
 			 empDetailsList.add(new EmployeeDetails(empinfo.getId(), empinfo.getName(), empinfo.getJobStage(), empinfo.getJobRole(),
 					empinfo.getSkills(), empinfo.getHobbies(), empsal.getSalary()));
             }else {
-            	logger.info("No Emp Found with ID.. " + empsal.getId());
+            	logger.info("EmployeeDetail Service No Emp Found with ID.. " + empsal.getId());
             }
 		}
 		

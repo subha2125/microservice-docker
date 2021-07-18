@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,8 @@ import com.ericcsson.employeesalaryservice.model.EmployeeSalaryList;
 @RequestMapping("/empsalary")
 public class EmployeeSalaryControl {
 	
+	Logger logger = LoggerFactory.getLogger(EmployeeSalaryControl.class);
+	
 	@Autowired
 	private RestTemplate restTemplate;
 	
@@ -29,6 +33,7 @@ public class EmployeeSalaryControl {
 	
 	@RequestMapping("/salary")
 	public EmployeeSalaryList getAllDetails(){
+		logger.info("EmployeeSalary Service called ");
         EmployeeSalaryList salaryList = new EmployeeSalaryList();
         salaryList.setEmployeesalaryList(employeeInfoAll);
 		return salaryList;
@@ -36,6 +41,7 @@ public class EmployeeSalaryControl {
 
 	@RequestMapping("/salary/{id}")
 	public EmployeeSalary employeeDetails(@PathVariable int id) {
+		logger.info("EmployeeSalary Service called with id {} :", id);
 		return employeeInfoAll.stream().filter(t -> t.getId() == id).findFirst().get();
 	}
 	
