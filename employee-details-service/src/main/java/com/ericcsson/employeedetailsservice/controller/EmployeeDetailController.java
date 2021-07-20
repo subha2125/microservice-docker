@@ -6,6 +6,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,13 @@ public class EmployeeDetailController {
 
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	@Autowired
+    private KafkaTemplate<String, List<EmployeeDetails>> kafkaTemplate;
 
+	@Value("${kafka.topic}")
+    private String topic;
+	
 	
 	@GetMapping("/getAllEmployeeDetails")
 	@ApiOperation(value="Get All Emp Details",response=EmployeeDetails.class)
@@ -50,6 +58,9 @@ public class EmployeeDetailController {
             	logger.info("EmployeeDetail Service No Emp Found with ID.. " + empsal.getId());
             }
 		}
+		
+		logger.info("Sending to Kafka Broker");
+		kafkaTemplate.send(topic, empDetailsList);
 		
 		return empDetailsList;
 
