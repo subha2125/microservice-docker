@@ -67,7 +67,7 @@ POST /emp-service/default
 5. create index in Kibana http://localhost:5601/app/management/kibana/indexPatterns
 6. serahc with newly created index at Discover > http://localhost:5601/app/discover#/?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-15m,to:now))&_a=(columns:!(),filters:!(),index:f844e830-e7e3-11eb-9f28-450b1112987c,interval:auto,query:(language:kuery,query:''),sort:!())
 
-21-July-Added Hazelcast
+# Added Hazelcast
  Run hazelcast first (Software\Cache\hazelcast-management-center-3.11.4)
 http://localhost:8080/hazelcast-mancenter/dev
 
