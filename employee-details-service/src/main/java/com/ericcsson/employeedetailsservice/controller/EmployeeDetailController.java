@@ -2,6 +2,9 @@ package com.ericcsson.employeedetailsservice.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +39,10 @@ public class EmployeeDetailController {
 	@Value("${kafka.topic}")
     private String topic;
 	
+    //Hazelcast Imap
+	@Autowired
+	private Map<Integer, EmployeeDetails> empDetailsMap;
+	
 	
 	@GetMapping("/getAllEmployeeDetails")
 	@ApiOperation(value="Get All Emp Details",response=EmployeeDetails.class)
@@ -62,10 +69,25 @@ public class EmployeeDetailController {
 		logger.info("Sending to Kafka Broker");
 		kafkaTemplate.send(topic, empDetailsList);
 		
+		//Put in HazelCast
+		empDetailsMap = empDetailsList.stream().collect(
+                Collectors.toMap(EmployeeDetails::getId, emp -> emp));
+		
+		
+		
+		logger.info("EmployeeDetailsController HazelCast Empdetails Imap..{}",empDetailsMap);
+		
 		return empDetailsList;
 
 	}
 	 
+	@RequestMapping("/getCache/{id}")
+	public EmployeeDetails getCache(@PathVariable int id) {
+		if(Objects.nonNull(empDetailsMap)) {
+			logger.info("hazelInst Emp Id :{} And Details:{}", id,empDetailsMap.get(id));
+		}
+		return Objects.nonNull(empDetailsMap) ? empDetailsMap.get(id) : new EmployeeDetails();
+	}
 
 	@RequestMapping("/{id}")
 	public EmployeeDetails employeeDetails(@PathVariable int id) {

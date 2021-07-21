@@ -20,12 +20,19 @@ public class KafkaListner {
 	
 	List<EmployeeDetails> userDetails = null;
 	
+	String kafkaMessage;
+	
 	@Value("${kafka.topic}")
     private String topic;
 	
 	@GetMapping("/userDeatails")
-	public List<EmployeeDetails> consumeJsonMessage() {
+	public List<EmployeeDetails> consumeUserDeatails() {
 		return userDetails;
+	}
+	
+	@GetMapping("/userMessage")
+	public String consumeMessage() {
+		return kafkaMessage;
 	}
 
 	@KafkaListener(topics = "Kafka_Employee", groupId = "group_json",
@@ -39,6 +46,7 @@ public class KafkaListner {
 	
 	@KafkaListener(topics = "Kafka_Example", groupId = "group_id")
     public void consume(String message) {
-       logger.info("Consumed Details Message {}: " , message);
+		kafkaMessage = message;
+       logger.info("Consumed Details Message {}: " , kafkaMessage);
     }
 }

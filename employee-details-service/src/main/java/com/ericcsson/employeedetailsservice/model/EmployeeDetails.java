@@ -1,10 +1,16 @@
 package com.ericcsson.employeedetailsservice.model;
 
+import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 
 @ApiModel(value="Details about Employee")
-public class EmployeeDetails {
+public class EmployeeDetails implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
 	private String jobStage;

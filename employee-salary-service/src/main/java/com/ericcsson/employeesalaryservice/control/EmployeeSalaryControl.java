@@ -28,7 +28,9 @@ public class EmployeeSalaryControl {
 	List<EmployeeSalary> employeeInfoAll = new ArrayList<>(Arrays.asList(
 			new EmployeeSalary(1, "100000"),
 			new EmployeeSalary(2, "300000"),
-			new EmployeeSalary(3, "200000")
+			new EmployeeSalary(3, "700000"),
+			new EmployeeSalary(4, "206500"),
+			new EmployeeSalary(6, "975750")
 			)); 
 	
 	@RequestMapping("/salary")

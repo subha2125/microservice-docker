@@ -2,7 +2,11 @@ package com.ericcsson.employeedetailsservice.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,20 +22,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ericcsson.employeedetailsservice.model.EmployeeDetails;
 import com.ericcsson.employeedetailsservice.model.Role;
 import com.ericcsson.employeedetailsservice.model.User;
 import com.ericcsson.employeedetailsservice.repository.RoleRepository;
 import com.ericcsson.employeedetailsservice.repository.UserRepository;
+import com.hazelcast.core.HazelcastInstance;
+
 
 @RestController
 @RequestMapping("/empdetails")
 public class EmployeeAddController {
+	
+	Logger logger = LoggerFactory.getLogger(EmployeeAddController.class);
 	
 	@Autowired
 	private UserRepository userRepository;
 	
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	@Autowired
+	private HazelcastInstance hazelInst;
+	
+	@Autowired
+	private Map<Integer, EmployeeDetails> empDetailsMap;
 
 	@CrossOrigin("*")
 	@PostMapping("/saveUser")
@@ -107,5 +122,19 @@ public class EmployeeAddController {
 	@GetMapping("/hello")
 	public String helloUser() {
 		return "Hello User";
+	}
+	
+	@RequestMapping("/getEmpByHazelCast/{id}")
+	public EmployeeDetails employeeDetails(@PathVariable int id) {
+		logger.info("hazelInst :{}",hazelInst);
+		logger.info("EmployeeAddController Empdetails Imap..{}",empDetailsMap);
+		
+		if(Objects.nonNull(hazelInst) && Objects.nonNull(hazelInst.getMap("empDetailsMap"))) {
+			logger.info("hazelInst Emp Id :{}",hazelInst.getMap("empDetailsMap").get(id));
+		}
+		if(Objects.nonNull(empDetailsMap)) {
+			logger.info("hazelInst Emp Id :{} And Details:{]", id,empDetailsMap.get(id));
+		}
+		return Objects.nonNull(empDetailsMap) ? empDetailsMap.get(id) : new EmployeeDetails();
 	}
 }
