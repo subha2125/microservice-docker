@@ -39,6 +39,11 @@ spring:
                 name: employee-salary-service
                 fallbackuri: forward:/empSalaryFallBack
                 
+        - id: employee-kafka-consumer
+          uri: lb://employee-kafka-consumer
+          predicates:
+            - Path=/empkafka/**  
+                
 
 server:
   port: 8989
