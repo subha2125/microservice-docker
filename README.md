@@ -71,4 +71,7 @@ POST /emp-service/default
  Run hazelcast first (Software\Cache\hazelcast-management-center-3.11.4)
 http://localhost:8080/hazelcast-mancenter/dev
 
+#Route logs to Kafka topics
+Added log4j2.xml to employee info, modified logstash.conf 
+
 
