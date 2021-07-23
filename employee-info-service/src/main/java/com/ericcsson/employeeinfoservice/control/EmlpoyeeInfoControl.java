@@ -37,14 +37,14 @@ public class EmlpoyeeInfoControl {
 
 	@RequestMapping("/info/{id}")
 	public EmployeeInfo employeeDetails(@PathVariable String id) {
-		logger.info("EmployeeInfo Service called with id {} :", id);
+		logger.info("EmployeeInfo Service: called with id {} :", id);
 		return infoRepository.findById(Long.parseLong(id)).orElse(null);
 	}
 
 	@PostMapping("/saveEmployee")
 	public @ResponseBody EmployeeInfo saveEmployeeDetails(@RequestBody EmployeeInfo employeeInfo) {
 		try {
-			logger.info("EmployeeInfo Service Request : {}",new ObjectMapper().writeValueAsString(employeeInfo));
+			logger.info("EmployeeInfo Info Request : {}",new ObjectMapper().writeValueAsString(employeeInfo));
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -53,6 +53,13 @@ public class EmlpoyeeInfoControl {
 
 	@RequestMapping("/greetings")
 	public String employeeDetails() {
+		logger.info("EmployeeInfo Info: greetings");
 		return restTemplate.getForObject("http://employee-details-service:8181/hello", String.class);
+	}
+	
+	@RequestMapping("/hello/{messgae}")
+	public String hello(@PathVariable String messgae) {
+		logger.info("EmployeeInfo Info: greetings :{}",messgae);
+		return "greetings:"+messgae;
 	}
 }

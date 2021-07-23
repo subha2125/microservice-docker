@@ -21,6 +21,17 @@ public class HazelcastConfig {
 
 	}
 
+	/*@Bean
+	public Config hazelCastConfig() {
+		return new Config().setInstanceName("hazlecast-insatnce")
+				.addMapConfig(new MapConfig().setName("EMPDETAILS")
+				.setMaxSizeConfig(new MaxSizeConfig(200, MaxSizeConfig.MaxSizePolicy.FREE_HEAP_SIZE))
+				.setEvictionPolicy(EvictionPolicy.LRU).setTimeToLiveSeconds(2000))
+				
+		        .addMapConfig(new MapConfig().setName("ZIPCODE")
+				.setMaxSizeConfig(new MaxSizeConfig(200, MaxSizeConfig.MaxSizePolicy.FREE_HEAP_SIZE))
+				.setEvictionPolicy(EvictionPolicy.LRU).setTimeToLiveSeconds(2000));
+	}*/
 	@Bean
 	public HazelcastInstance hazelcastInstance(Config hazelCastConfig) {
 		return Hazelcast.newHazelcastInstance(hazelCastConfig);
