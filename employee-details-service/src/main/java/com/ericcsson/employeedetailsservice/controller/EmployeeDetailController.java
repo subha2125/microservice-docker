@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,9 +48,10 @@ public class EmployeeDetailController {
 	
 	@GetMapping("/getAllEmployeeDetails")
 	@ApiOperation(value="Get All Emp Details",response=EmployeeDetails.class)
+	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public List<EmployeeDetails> getAllDetails() {
 		List<EmployeeDetails> empDetailsList = new ArrayList<EmployeeDetails>();
-		logger.info("EmployeeDetail Service called :");
+		logger.info("EmployeeDetail getAllEmployeeDetails called :");
 		logger.info("Calling to employee-salary-service start");
 		EmployeeSalaryList empsalAll = restTemplate.getForObject("http://employee-salary-service/empsalary/salary/",
 				EmployeeSalaryList.class);
@@ -58,24 +61,22 @@ public class EmployeeDetailController {
 			EmployeeInfo empinfo = restTemplate.getForObject("http://employee-info-service/empinfo/info/"+empsal.getId(), EmployeeInfo.class);
 			
             if(empinfo != null) {
-            	logger.info("EmployeeDetail Service Employee found with details as .. " + empinfo.toString());
+            	logger.info("EmployeeDetails Service Employee found with details as .. " + empinfo.toString());
 			 empDetailsList.add(new EmployeeDetails(empinfo.getId(), empinfo.getName(), empinfo.getJobStage(), empinfo.getJobRole(),
 					empinfo.getSkills(), empinfo.getHobbies(), empsal.getSalary()));
             }else {
-            	logger.info("EmployeeDetail Service No Emp Found with ID.. " + empsal.getId());
+            	logger.info("EmployeeDetails Service No Emp Found with ID.. " + empsal.getId());
             }
 		}
 		
-		logger.info("Sending to Kafka Broker");
+		logger.info("EmployeeDetails Sending to Kafka Broker");
 		kafkaTemplate.send(topic, empDetailsList);
 		
 		//Put in HazelCast
 		empDetailsMap = empDetailsList.stream().collect(
                 Collectors.toMap(EmployeeDetails::getId, emp -> emp));
 		
-		
-		
-		logger.info("EmployeeDetailsController HazelCast Empdetails Imap..{}",empDetailsMap);
+		logger.info("EmployeeDetails HazelCast Empdetails Imap..{}",empDetailsMap);
 		
 		return empDetailsList;
 
@@ -91,6 +92,7 @@ public class EmployeeDetailController {
 
 	@RequestMapping("/{id}")
 	public EmployeeDetails employeeDetails(@PathVariable int id) {
+		logger.info("EmployeeDetail employeeDetails called id{}:",id);
 		EmployeeInfo empinfo = restTemplate.getForObject("http://employee-info-service/empinfo/info/" + id, EmployeeInfo.class);
 		EmployeeSalary empsal = restTemplate.getForObject("http://employee-salary-service/empsalary/salary/" + id,
 				EmployeeSalary.class);

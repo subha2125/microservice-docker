@@ -43,7 +43,7 @@ public class EmployeeSalaryControl {
 
 	@RequestMapping("/salary/{id}")
 	public EmployeeSalary employeeDetails(@PathVariable int id) {
-		logger.info("EmployeeSalary Service called with id {} :", id);
+		logger.info("EmployeeSalary called with id {} :", id);
 		return employeeInfoAll.stream().filter(t -> t.getId() == id).findFirst().get();
 	}
 	

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" name="spring-boot-log-to-kafka-example" packages="io.woolford">
+
+     <Properties>
+        <Property name="bootstrap.servers">localhost:9092</Property>
+        <Property name="kafka.topic.logs">kafka-logs</Property>
+     </Properties>
+     
+    <Appenders>
+        <Kafka name="kafkaAppender" topic="${kafka.topic.logs}">
+            <JSONLayout />
+            <Property name="bootstrap.servers">${bootstrap.servers}</Property>
+        </Kafka>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="kafkaAppender"/>
+        </Root>
+        <Logger name="org.apache.kafka" level="WARN" />
+    </Loggers>
+    
+    
+</Configuration>
