@@ -1,0 +1,27 @@
+Start Zookeeper
+----------------------------------
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+Start Kafka Server
+---------------------------
+bin/kafka-server-start.sh config/server.properties 
+
+.\bin\windows\kafka-server-start.bat .\config\server.properties // Windows
+
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic Kafka_Example
+
+
+kafka-topics.bat --list --zookeeper localhost:2181
+
+kafka-console-producer.bat --broker-list localhost:9092 --topic test // Send to broker
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic Kafka_Example --from-beginning   // Consumes from Broker 
+
+
+https://dzone.com/articles/running-apache-kafka-on-windows-os
+
+
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic Kafka_Example
+kafka-console-producer.bat --broker-list localhost:9092 --topic Kafka_Example
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic Kafka_Employee
