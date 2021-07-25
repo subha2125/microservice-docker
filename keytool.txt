@@ -1,0 +1,25 @@
+#Generates a certficate stored inside JKS keystore file
+keytool -genkey -alias eureka -storetype JKS -keyalg RSA -keysize 2048 -validity 365 -keystore eureka.jks
+keytool -genkey -alias client -storetype JKS -keyalg RSA -keysize 2048 -validity 365 -keystore client.jks
+
+#Export certficates from generated keystores for both client and server sides.
+keytool -export -alias client -file client.crt -keystore client.jks
+keytool -export -alias eureka -file eureka.crt -keystore eureka.jks
+
+#Import the client’s certificate to the server’s keystore and the server’s certificate to the client’s keystore
+keytool -import -alias client -file client.crt -keystore eureka.jks
+keytool -import -alias eureka -file eureka.crt -keystore client.jks
+
+# Delete a jks
+keytool -delete -alias eureka -keystore eureka.jks
+keytool -delete -alias client -keystore client.jks
+
+#List a JKS
+keytool -v -list -keystore eureka.jks
+
+#Import client’s keystore to our web browser to be able to access it. We have to convert client’s keystore from JKS to PKCS12 format. Here’s the command that performs mentioned operation.
+
+keytool -importkeystore -srckeystore client.jks -destkeystore client.p12 -srcstoretype JKS -deststoretype PKCS12 -srcstorepass password -deststorepass password -srcalias client -destalias client -srckeypass password -destkeypass password -noprompt
+
+
+openssl x509 -req -in client.req -CA client.cer -CAkey client.key -extensions client -extfile openssl.cnf -CAserial client.srl -out client.cer -sha256 
