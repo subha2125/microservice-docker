@@ -23,3 +23,39 @@ keytool -importkeystore -srckeystore client.jks -destkeystore client.p12 -srcsto
 
 
 openssl x509 -req -in client.req -CA client.cer -CAkey client.key -extensions client -extfile openssl.cnf -CAserial client.srl -out client.cer -sha256 
+
+
+## Implementing Two Way SSL (For one way executed till step 3 only)
+
+-----------------------------------------
+
+Step 1: Generate Server Keystore
+----------------------------------
+keytool -genkey -alias mule-server -keysize 2048 -keyalg RSA -keystore server-keystore.jks
+
+Step 2: Export the Public Certificate From Server Keystore
+--------------------------------------------------------------
+keytool -export -alias mule-server -keystore server-keystore.jks -file server_public.crt
+-- This command will export the server public certificate and we will import that server public certificate in the client truststore.
+
+Step 3: Import Server Public Certificate Into Client Truststore
+----------------------------------------------------------------
+keytool -import -alias mule-client-public -keystore client-truststore.jks -file server_public.crt
+-- This above command will generate the client's truststore and import the server public certificate.
+
+Step 4: Generate Client Keystore
+---------------------------------
+keytool -genkey -alias mule-client -keysize 2048 -keyalg RSA -keystore client-keystore.jks
+
+Step 5: Export the Public Certificate From Client Keystore
+------------------------------------------------------------
+keytool -export -alias mule-client -keystore client-keystore.jks -file client_public.crt
+-- This command will export the client public certificate and we will import that client public certificate in the server truststore.
+
+Step 6: Import Client Public Certificate Into Server truststore
+---------------------------------------------------------------------
+keytool -import -alias mule-server-public -keystore server-truststore.jks -file client_public.crt
+
+-- This above command will generate the server truststore and import the client public certificate.
+
+
