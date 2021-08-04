@@ -1,21 +1,31 @@
-or create a new repository on the command line
+Create a new repository on the command line
+-------------------------------------------------------
 echo "# microservice-training-code" >> README.md
 git init
 git add README.md
 git commit -m "first commit"
 
+git branch -M master
+git remote add origin https://github.com/subha2125/microservice-training-code.git
+git push -u origin master
+
+Push an existing repository from the command line
+-----------------------------------------
 
 git remote add origin https://github.com/subha2125/microservice-training-code.git
 git push -u origin master
 
-…or push an existing repository from the command line
 
-git remote add origin https://github.com/subha2125/microservice-training-code.git
-git push -u origin master
+Create new branch and push to repository
+-----------------------------------------------
+
+git checkout -b branch-name
+git push -u origin branch-name
 
 git remote add origin https://github.com/subha2125/ComboQuery.git
 git remote add origin https://github.com/subha2125/ComboQuery.git
-git push -u origin master
+
+git push -u origin master -- Push Master branch
 
 parameswaribala@gmail.com
 
@@ -33,11 +43,17 @@ git config --global core.compression 0
 --------------------------------
 git clone -b EDA-NEWMETRO-PI10-Dec2019 https://gitlab.mana.ericssondevops.com/tmo-bundle-deal-projects/eda/eda-development.git 
 git config --system core.longpaths true
+git config --global user.name "your username"
+git config --global user.password "your password"
+
+git remote set-url origin new.git.url/here
 
 **** Clone a Single Branch ***
 ------------------------------------
 git clone --single-branch --branch Sledgehammer https://gitlab.mana.ericssondevops.com/tmo-bundle-deal-projects/eda/eda-development.git
 git clone --single-branch --branch Sledgehammer ssh://git@git.mana.ericssondevops.com:2222/tmo-bundle-deal-projects/eda/eda-development.git
+
+git clone --single-branch --branch feature-PI14-CAMay20 --depth=1 ssh://git@git.mana.ericssondevops.com:2222/tmo-bundle-deal-projects/eda/eda-development.git
 
 *** Shallow Clone Fetch only current commit as depth is 1***
 ------------------------------------------------------
@@ -74,11 +90,59 @@ git reset --hard HEAD  --Reset the status with HEAD
 git reset --hard origin/EDA-NEWMETRO-PI10-Dec2019
 git reset --hard SHA
 
+git reset HEAD  filename -- Reset the file from staging to working copy (Unstaging state)
+git checkout -- filename -- Discard the changes also in the file
+git diff --staged HEAD -- Compare Staged Copy with Repo
+git diff HEAD --- Compare Working Copy with Repo
+
+************************************************
+
+If you want to revert changes made to your working copy, do this:
+--------------------------------------------------------
+
+git checkout .
+
+If you want to revert changes made to the index (i.e., that you have added), do this. Warning this will reset all of your unpushed commits to master!:
+--------------------------------------------------
+
+git reset
+
+If you want to revert a change that you have committed, do this:
+------------------------------------------------------------------
+
+git revert <commit 1> <commit 2>
+
+If you want to remove untracked files (e.g., new files, generated files):
+-------------------------------------------------------------------------
+
+git clean -f
+
+Or untracked directories (e.g., new or automatically generated directories):
+---------------------------------------------------------------------------
+
+git clean -fd
+
+Recover-from-git-reset-hard
+----------------------------------
+git reflog
+
+f876e42 (HEAD -> master, origin/master) HEAD@{0}: pull origin master: Fast-forward
+40ffaf4 HEAD@{1}: reset: moving to 40ffaf428ba3240da23b4c333756cabbbce344d2
+4e9a131 HEAD@{2}: pull origin master: Merge made by the 'recursive' strategy.
+bebd10c HEAD@{3}: commit: Added Config Client
+40ffaf4 HEAD@{4}: pull --progress -v --no-rebase --allow-unrelated-histories origin master: Merge made by the 'recursive' strategy.
+1613b56 HEAD@{5}: commit (initial): Committing docker and openshift ins app
+ 
+Then Type
+------------
+
+git reset HEAD@{3}  After manually checkout as git checkout filename or all as git checkout  config-client/*
+
 ********** Create Patch **********
 ----------------------------------------------
-Create it -> git diff --patch > C:\Users\eshghos\Downloads\Docs\Project-Doc\TMO\Femtocell\Git-patch\jdv-nap-resources.patch
+Create it -> git diff --patch > C:\Users\eshghos\Downloads\Docs\Project-Doc\TMO\BR#58.3\csquery-feature.patch
 
-Apply it - > git apply C:\Users\eshghos\Downloads\Docs\Project-Doc\TMO\Femtocell\Git-patch\jdv-nap-resources.patch
+Apply it - > git apply C:\Users\eshghos\Downloads\Docs\Project-Doc\TMO\Femtocell\Git-patch\csquery-feature.patch
 
 git apply C:\Users\eshghos\Downloads\Docs\Project-Doc\TMO\Femtocell\Git-patch\jdv-nap-resources.patch --ignore-space-change --ignore-whitespace
 
