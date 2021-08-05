@@ -78,10 +78,15 @@ Added log4j2.xml to employee info, modified logstash.conf
 
 # Add Asymmetric Encryption Config Server
 Copy US_export_policy.jar and local-policy.jar in dk1.8.0_201\jre\lib\security
+
 Gen KeyStore - keytool -genkeypair -alias test -keyalg RSA  -dname "CN=Local,OU=Local,O=My laptop,L=Bengal,S=Kolkata,C=India" -keypass ***** -keystore test.jks -storepass ******
+
 add encryption properties to application.properties in config server
+
 encrypt any test by POST req > http://localhost:8888/encrypt 
+
 Decrypt the same by POST req to http://localhost:8888/decrypt
+
 Add {cipher} infornt of encrypted property in required client property {cipher}encrypted-password
 
 
