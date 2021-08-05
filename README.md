@@ -89,7 +89,7 @@ Decrypt the same by POST req to http://localhost:8888/decrypt
 
 Add {cipher} infornt of encrypted property in required client property {cipher}encrypted-password
 
-# Add JWT Token Authrorization to Gateway Service
+# Add JWT Token Authorization to Gateway Service
 
 GET the Token by sending POST request to http://api-gateway-ip:8082/users-ws/users/login with body as below
 
@@ -99,7 +99,7 @@ GET the Token by sending POST request to http://api-gateway-ip:8082/users-ws/use
 
 }
 
-Where user-ws is a seperate Microservice for Authrorization which returns JWT token after successful login
+Where user-ws is a seperate Microservice for Authorization which returns JWT token after successful login
 
 Note if user not alreday created pls create it http://defkvm02.mgmt.ericsson.se:8082/users-ws/users with body
 
