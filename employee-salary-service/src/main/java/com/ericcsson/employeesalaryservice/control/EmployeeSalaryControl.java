@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.ericcsson.employeesalaryservice.model.EmployeeSalary;
 import com.ericcsson.employeesalaryservice.model.EmployeeSalaryList;
+import com.ericcsson.employeesalaryservice.repository.EmployeeSalaryRepository;
 
 
 @RestController
@@ -24,6 +25,9 @@ public class EmployeeSalaryControl {
 	
 	@Autowired
 	private RestTemplate restTemplate;
+	@Autowired
+	EmployeeSalaryRepository employeeSalaryRepo;
+	
 	
 	List<EmployeeSalary> employeeInfoAll = new ArrayList<>(Arrays.asList(
 			new EmployeeSalary(1, "100000"),
@@ -37,7 +41,7 @@ public class EmployeeSalaryControl {
 	public EmployeeSalaryList getAllDetails(){
 		logger.info("EmployeeSalary Service called ");
         EmployeeSalaryList salaryList = new EmployeeSalaryList();
-        salaryList.setEmployeesalaryList(employeeInfoAll);
+        salaryList.setEmployeesalaryList(employeeSalaryRepo.findAll());
 		return salaryList;
 	}
 
