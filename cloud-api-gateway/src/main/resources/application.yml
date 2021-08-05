@@ -33,11 +33,14 @@ spring:
           uri: lb://employee-salary-service
           predicates:
             - Path=/empsalary/**
+              #Header=Authorization, Bearer (.*)
           filters:
-            - name: CircuitBreaker
-              args:
-                name: employee-salary-service
-                fallbackuri: forward:/empSalaryFallBack
+            - AuthorizationHeaderFilter
+            #- name: CircuitBreaker
+              #args:
+                #name: employee-salary-service
+                #fallbackuri: forward:/empSalaryFallBack
+                #RemoveRequestHeader: Cookie
                 
         - id: employee-kafka-consumer
           uri: lb://employee-kafka-consumer

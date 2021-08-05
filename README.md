@@ -89,4 +89,26 @@ Decrypt the same by POST req to http://localhost:8888/decrypt
 
 Add {cipher} infornt of encrypted property in required client property {cipher}encrypted-password
 
+# Add JWT Token Authrorization to Gateway Service
 
+GET the Token by sending POST request to http://api-gateway-ip:8082/users-ws/users/login with body as below
+
+{
+  "email": "test@gmail.com",
+  "password": "test"
+
+}
+
+Where user-ws is a seperate Microservice for Authrorization which returns JWT token after successful login
+
+Note if user not alreday created pls create it http://defkvm02.mgmt.ericsson.se:8082/users-ws/users with body
+
+{
+  "firstName": "Lambda",
+  "lastName": "Eric",
+  "password": "test",
+  "email": "test@gmail.com"
+}
+
+After that try to Accees http://defkvm02.mgmt.ericsson.se:8989/empsalary/salary (defkvm02.mgmt.ericsson is API-Gateway DNS in Eureka)
+If JWT Token is valid it will return details else 403
