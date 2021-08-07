@@ -3,7 +3,7 @@
 
      <Properties>
         <Property name="bootstrap.servers">localhost:9092</Property>
-        <Property name="kafka.topic.logs">kafka-logs</Property>
+        <Property name="kafka.topic.logs">employee-details-logs</Property>
      </Properties>
      
     <Appenders>
