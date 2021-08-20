@@ -3,8 +3,21 @@ use employeedb;
 
 create database cache;
 use employeeDB;
+use springtest;
 
-select * from user;
+
+select * from Course;
+select * from Teacher;
+
+select c.title,t.first_name from Teacher t,Course c
+where t.teacher_id=c.teacher_id;
+
+SELECT c.title,t.first_name from Teacher t
+INNER JOIN Course c ON t.teacher_id=c.teacher_id where c.course_id=3;
+
+select * from Course_material;
+select * from tbl_Student;
+
 
 select * from EmployeeInfo;
 
