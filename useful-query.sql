@@ -1,4 +1,6 @@
 use springsecurity;
+
+select * from user;
 use employeedb;
 
 create database cache;
@@ -10,7 +12,7 @@ select * from Course;
 select * from Teacher;
 
 select c.title,t.first_name from Teacher t,Course c
-where t.teacher_id=c.teacher_id;
+where t.teacher_id=c.teacher_id and c.course_id=3;
 
 SELECT c.title,t.first_name from Teacher t
 INNER JOIN Course c ON t.teacher_id=c.teacher_id where c.course_id=3;

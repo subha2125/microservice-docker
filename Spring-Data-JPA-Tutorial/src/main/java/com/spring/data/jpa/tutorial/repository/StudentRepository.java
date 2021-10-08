@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.data.jpa.tutorial.entity.Student;
@@ -52,7 +54,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     );
 
     @Modifying
-    @Transactional
+    @Transactional(isolation=Isolation.SERIALIZABLE,propagation=Propagation.MANDATORY)
     @Query(
             value = "update tbl_student set first_name = ?1 where email_address = ?2",
             nativeQuery = true
